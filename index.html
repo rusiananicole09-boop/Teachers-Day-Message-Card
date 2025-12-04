@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Teachers’ Day Message Card</title><!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script><!-- Canva SDKs -->
+  <script src="/_sdk/element_sdk.js"></script>
+ 
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="app-wrapper">
+  <header class="w-full">
+   <h1 class="sr-only">Teachers’ Day Interactive Message Card</h1>
+  </header>
+  <main class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1d3557] px-4 py-6">
+   <section class="w-full max-w-4xl grid md:grid-cols-[1.2fr,1fr] gap-6 md:gap-8 items-stretch" aria-label="Teachers’ Day message card editor and preview"><!-- Left: Card Preview -->
+    <article class="relative rounded-3xl shadow-2xl overflow-hidden bg-[#1b263b] border border-[#a8dadc]/40 flex flex-col" aria-label="Card preview"><!-- Decorative corner shapes -->
+     <div class="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-[#e76f51]/40 blur-2xl opacity-70"></div>
+     <div class="pointer-events-none absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#f4a261]/40 blur-2xl opacity-70"></div><!-- Top ribbon -->
+     <div class="relative z-10 flex items-center justify-between px-6 pt-6 pb-3" aria-hidden="true">
+      <div class="flex items-center gap-2"><!-- Small book-ish SVG -->
+       <svg class="w-8 h-8 float-soft" viewbox="0 0 64 64" aria-hidden="true"><rect x="10" y="10" width="20" height="44" rx="3" fill="#f4a261"></rect> <rect x="26" y="10" width="20" height="44" rx="3" fill="#e76f51"></rect> <polygon points="10,10 32,4 52,10 32,16" fill="#ffe5b4"></polygon>
+       </svg>
+       <div class="flex flex-col"><span id="preview-subtitle" class="text-xs tracking-[0.25em] uppercase text-[#f1faee]/70"> To the best teacher ever </span> <span class="text-[11px] text-[#f1faee]/50"> Teachers’ Day • A note from your student </span>
+       </div>
+      </div><!-- Tiny floating hearts -->
+      <div class="flex gap-1 text-[#ffe66d] float-soft" style="animation-delay: 400ms;"><span aria-hidden="true">★</span> <span aria-hidden="true">✧</span>
+      </div>
+     </div><!-- Main content -->
+     <div class="relative z-10 flex-1 px-6 pb-6 flex flex-col">
+      <div class="bg-[#0b1320]/60 rounded-2xl px-5 pt-5 pb-4 border border-[#a8dadc]/30 shadow-inner">
+       <h2 id="preview-title" class="text-2xl md:text-3xl font-semibold text-[#f1faee] leading-snug mb-2">Happy Teachers’ Day!</h2>
+       <p id="preview-body" class="text-sm md:text-base text-[#f1faee]/80 leading-relaxed">Thank you for everything</p>
+      </div><!-- Signature -->
+      <div class="mt-4 flex items-center justify-between gap-2">
+       <div class="flex items-center gap-2 text-xs text-[#f1faee]/60"><span aria-hidden="true">✏️</span> <span>Personalized just for you</span>
+       </div>
+       <p id="preview-from" class="text-right text-sm font-medium text-[#ffe66d]">Kim Nicole Rusiana</p>
+      </div><!-- Open / Close button -->
+      <div class="mt-5 flex justify-center"><button id="toggle-card-btn" type="button" class="focus-ring inline-flex items-center gap-2 rounded-full px-6 py-2 text-sm font-semibold text-[#0b1320] bg-[#ffe66d] hover:bg-[#f4a261] transition-colors duration-200 shadow-md"> <span id="preview-button-text">Open Card</span> <span aria-hidden="true" id="preview-button-icon">➜</span> </button>
+      </div>
+     </div><!-- Hidden “inside” message overlay -->
+     <div id="inside-card" class="pointer-events-none opacity-0 absolute inset-0 bg-[#0b1320]/95 flex flex-col items-center justify-center px-6 text-center transition-opacity duration-300" aria-hidden="true">
+      <p id="inside-main-text" class="max-w-md text-lg md:text-xl text-[#f1faee] leading-relaxed mb-4">Dear Teacher, your lessons go beyond books. You’ve shown me how to be curious, kind, and brave. I’m grateful for all the ways you’ve helped me grow.</p>
+      <p id="inside-small-text" class="text-xs md:text-sm text-[#f1faee]/70">Thank you for making the classroom a place where every question is welcome and every student matters.</p>
+     </div>
+    </article><!-- Right: Simple Editor (works in a normal browser too) -->
+    <aside class="rounded-3xl bg-[#0b1320]/70 border border-[#a8dadc]/40 shadow-xl px-5 py-5 flex flex-col justify-between" aria-label="Message editor">
+     <div>
+      <h2 class="text-lg font-semibold text-[#f1faee] mb-1">Personalize your card</h2>
+      <p class="text-xs text-[#f1faee]/70 mb-4">Change the text below and see your custom Teachers’ Day card update instantly.</p>
+      <form id="card-form" class="space-y-3" aria-label="Card text form">
+       <div><label for="title-input" class="block text-xs font-medium text-[#f1faee]/80 mb-1"> Card title </label> <input id="title-input" name="title" type="text" class="focus-ring w-full rounded-lg border border-[#a8dadc]/40 bg-[#1b263b]/80 text-[#f1faee] text-sm px-3 py-2 placeholder:text-[#f1faee]/40" value="Happy Teachers’ Day!">
+       </div>
+       <div><label for="subtitle-input" class="block text-xs font-medium text-[#f1faee]/80 mb-1"> Subtitle (small line at top) </label> <input id="subtitle-input" name="subtitle" type="text" class="focus-ring w-full rounded-lg border border-[#a8dadc]/40 bg-[#1b263b]/80 text-[#f1faee] text-sm px-3 py-2 placeholder:text-[#f1faee]/40" value="To the best teacher ever">
+       </div>
+       <div><label for="message-input" class="block text-xs font-medium text-[#f1faee]/80 mb-1"> Main message </label> <textarea id="message-input" name="message" rows="4" class="focus-ring w-full rounded-lg border border-[#a8dadc]/40 bg-[#1b263b]/80 text-[#f1faee] text-sm px-3 py-2 placeholder:text-[#f1faee]/40 resize-none">Thank you for inspiring, guiding, and supporting me every single day.
+Your patience and passion make learning feel magical.</textarea>
+       </div>
+       <div><label for="from-input" class="block text-xs font-medium text-[#f1faee]/80 mb-1"> From (signature) </label> <input id="from-input"Kim Nicole Rusiana" type="text" class="focus-ring w-full rounded-lg border border-[#a8dadc]/40 bg-[#1b263b]/80 text-[#f1faee] text-sm px-3 py-2 placeholder:text-[#f1faee]/40" value="Kim Nicole Rusiana">
+       </div>
+       <div><label for="button-label-input" class="block text-xs font-medium text-[#f1faee]/80 mb-1"> Button text </label> <input id="button-label-input" name="buttonText" type="text" class="focus-ring w-full rounded-lg border border-[#a8dadc]/40 bg-[#1b263b]/80 text-[#f1faee] text-sm px-3 py-2 placeholder:text-[#f1faee]/40" value="Open Card">
+       </div>
+      </form>
+     </div><!-- Tiny help text -->
+     <p class="mt-4 text-[11px] text-[#f1faee]/60">Tip: You can use this as a mini web development practice project—open this file in a browser, tweak the HTML, CSS, or JavaScript, and see what changes.</p>
+    </aside>
+   </section>
+  </main>
+  <footer class="w-full text-center text-[11px] text-[#f1faee]/40 mt-2 mb-3 px-4">
+   Teachers’ Day Message Card • Made with HTML, CSS, and JavaScript
+  </footer>
+
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a89a5fb33badb23',t:'MTc2NDgzMzk1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
